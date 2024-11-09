@@ -14,6 +14,21 @@ evolv<-function(W=NA,N=100,ff=NA){
 	return(out)
 }
 
+## function for NFDS for green and stripe
+## returns vector of w values based on genotype frequencies
+## and NFDS fitness function
+nfds<-function(W=NA,a=0.5,b=0,dom=1,ff=NA){
+	## W is base matrix, use for melanic
+	## a is interecept, b is slope
+	## both on logit scale
+	## dom dominance of stripe relative to green (0 or 1)
+
+	## calcualte number of greens, stripes and melanics
+
+	## compute fitnesses based on phenotype frequencies
+	return(W)
+}
+
 ## test simulation
 P<-matrix(NA,nrow=3,ncol=1000)
 ## drift
