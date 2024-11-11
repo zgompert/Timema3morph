@@ -15,19 +15,49 @@ evolv<-function(W=NA,N=100,ff=NA){
 }
 
 ## function for NFDS for green and stripe
-## returns vector of w values based on genotype frequencies
+## returns green and stripe fitnesses based on frequencies
 ## and NFDS fitness function
-nfds<-function(W=NA,a=0.5,b=0,dom=1,ff=NA){
-	## W is base matrix, use for melanic
-	## a is interecept, b is slope
-	## both on logit scale
-	## dom dominance of stripe relative to green (0 or 1)
+nfds<-function(muw=0,betaw=0,mubar=0,betabar=0,nG=NA,nS=NA){
+	## logit(wbar) = mubar + betabar * pstripe
+	## wstripe/wbar = exp(muw + betaw * pstripe)
+	## wgreen = 2wbar - wstripe
+	## stripe frequency p = pstripe
+	p<-nS/(nS+nG)
 
-	## calcualte number of greens, stripes and melanics
+	## compute wbar
+	lwbar<-mubar+betabar*p
+	wbar<-1/(1+exp(-lwbar))
 
-	## compute fitnesses based on phenotype frequencies
-	return(W)
+	## copmute wstripe
+	wstripe<-wbar * exp(muw+ betaw * p)
+
+	## compute wgreen
+	wgreen<-2 * wbar - wstripe
+
+	ww<-c(wgreen,wstripe)
+	return(ww)
 }
+
+## posterior meands from nfdsfit.rdat
+## mubar = -.87
+## muw = 0.70 
+## betabar = -0.26 
+## betaw = -0.90
+## consistent with replay paper
+## nfds(muw = 0.7, betaw = -.9, mubar = -.87, betabar = -.26, nG=10, nS=10)
+
+
+
+## main/control function
+mainevolv<-function(p0=c(1/3,1/3,1/3),W=NA,Nmuw=0,betaw=0,mubar=0,betabar=0,gen=100){
+
+	## p0 = initial frequency of G, S, and M
+	## W = fixed or baseline fitness values
+	## loop over generations
+	for(i in 1:Ngen){
+
+}
+
 
 ## test simulation
 P<-matrix(NA,nrow=3,ncol=1000)
